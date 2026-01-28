@@ -1,5 +1,6 @@
 from django.core.mail import send_mail
 from django.conf import settings
+from django.utils import timezone 
 
 def send_status_update_email(application, old_status, new_status):
     """Send email notification when application status is updated"""
@@ -41,6 +42,9 @@ def send_interview_email(interview):
     
     subject = f'Interview Scheduled - {job.title}'
     
+    local_time = timezone.localtime(interview.date)
+    formatted_date_time = local_time.strftime('%B %d, %Y at %I:%M %p')
+    
     meeting_info = ""
     if interview.mode == 'online' and interview.meeting_link:
         meeting_info = f"\nMeeting Link: {interview.meeting_link}"
@@ -53,7 +57,7 @@ def send_interview_email(interview):
     Congratulations! You have been selected for an interview for the position "{job.title}".
     
     Interview Details:
-    Date & Time: {interview.date.strftime('%B %d, %Y at %I:%M %p')}
+    Date & Time: {formatted_date_time}
     Mode: {interview.mode.title()}
     {meeting_info}
     
@@ -73,5 +77,3 @@ def send_interview_email(interview):
         )
     except Exception as e:
         print(f"Error sending email: {e}")
-
-
