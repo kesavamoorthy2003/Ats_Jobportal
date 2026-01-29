@@ -63,7 +63,6 @@ const EmployerDashboardWithAuth = () => {
                                 <small>Posted on: {new Date(job.created_at).toLocaleDateString()}</small>
                             </div>
                             
-                            {/* Edit மற்றும் Delete பட்டன்கள் */}
                             <div className="btn-group">
                                 <button 
                                     className="btn btn-sm btn-warning me-2" 
